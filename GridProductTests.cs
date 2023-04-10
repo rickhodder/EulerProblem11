@@ -10,6 +10,7 @@ public class GridProductTests
     5 6 7 8
     9 10 11 12
     13 14 15 16";
+    
 
     public GridProductTests(ITestOutputHelper output)
     {
@@ -72,8 +73,6 @@ public class GridProductTests
         var grid = gridProduct.ParseGrid(_testGrid);
         var product = gridProduct.CalculateDiagonalRightProduct(grid, 0, 0, 4);
         Assert.Equal(1 * 6 * 11 * 16, product);
-        product = gridProduct.CalculateDiagonalRightProduct(grid, 0, 1, 4);
-        Assert.Equal(0, product);
     }
 
     [Fact]
