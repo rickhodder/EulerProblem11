@@ -23,27 +23,37 @@ public class GridProduct
         return grid;
     }
 
-    public int CalculateMaxProduct(string gridContents, int GROUP_SIZE=4)
+    public int CalculateMaxProduct(string gridContents, int GROUP_SIZE = 4)
     {
         var grid = ParseGrid(gridContents);
         var result = 0;
         for (int row = 0; row < grid.GetLength(0); row++)
             for (int column = 0; column < grid.GetLength(1); column++)
             {
-                // if not enough rows and columns to make a group of GROUP_SIZE, skip
-                if ((row >= grid.GetLength(0) - GROUP_SIZE + 1) || (column >= (grid.GetLength(1) - GROUP_SIZE + 1)))
-                    continue;
+                // // if not enough rows and columns to make a group of GROUP_SIZE, skip
+                // if ((row >= grid.GetLength(0) - GROUP_SIZE + 1) || (column >= (grid.GetLength(1) - GROUP_SIZE + 1)))
+                //     continue;
 
-                result = Math.Max(result, CalculateHorizontalProduct(grid, row, column, GROUP_SIZE));
-                result = Math.Max(result, CalculateVerticalProduct(grid, row, column, GROUP_SIZE));
-                result = Math.Max(result, CalculateDiagonalRightProduct(grid, row, column, GROUP_SIZE));
-                result = Math.Max(result, CalculateDiagonalLeftProduct(grid, row, column, GROUP_SIZE));
+                //if (column <= (grid.GetLength(1) - GROUP_SIZE + 1)) // enough columns
+                    result = Math.Max(result, CalculateHorizontalProduct(grid, row, column, GROUP_SIZE));
+
+                //if (row <= (grid.GetLength(0) - GROUP_SIZE + 1)) // enough rows
+                    result = Math.Max(result, CalculateVerticalProduct(grid, row, column, GROUP_SIZE));
+
+                //if ((row <= (grid.GetLength(0) - GROUP_SIZE + 1)) && (column <= (grid.GetLength(1) - GROUP_SIZE + 1))) // enough rows and columns
+                //{
+                    result = Math.Max(result, CalculateDiagonalRightProduct(grid, row, column, GROUP_SIZE));
+                    result = Math.Max(result, CalculateDiagonalLeftProduct(grid, row, column, GROUP_SIZE));
+                //}
             }
         return result;
     }
 
     public int CalculateHorizontalProduct(int[,] grid, int row, int column, int groupSize)
     {
+        if (column >= (grid.GetLength(1) - groupSize + 1)) // not enough columns
+        return 0;
+
         var result = 1;
 
         for (int i = column; i < column + groupSize; i++)
@@ -55,6 +65,9 @@ public class GridProduct
 
     public int CalculateVerticalProduct(int[,] grid, int row, int column, int groupSize)
     {
+        if (row >= (grid.GetLength(0) - groupSize + 1)) // not enough rows
+            return 0;
+
         var result = 1;
 
         for (int i = row; i < row + groupSize; i++)
@@ -66,6 +79,9 @@ public class GridProduct
 
     public int CalculateDiagonalRightProduct(int[,] grid, int row, int column, int groupSize)
     {
+        if ((row >= (grid.GetLength(0) - groupSize + 1)) || (column >= (grid.GetLength(1) - groupSize + 1))) // not enough rows or columns
+            return 0;
+
         var result = 1;
 
         for (int i = 0; i < groupSize; i++)
@@ -79,6 +95,9 @@ public class GridProduct
 
     public int CalculateDiagonalLeftProduct(int[,] grid, int row, int column, int groupSize)
     {
+        if ((row >= (grid.GetLength(0) - groupSize + 1)) || (column >= (grid.GetLength(1) - groupSize + 1))) // not enough rows or columns
+            return 0;
+
         var result = 1;
 
         for (int i = 0; i < groupSize; i++)
