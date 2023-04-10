@@ -48,7 +48,7 @@ public class GridProductTestsFinal
     {
         var gridProduct = new GridProduct();
         var result = gridProduct.CalculateMaxProduct(_testGrid);
-        _output.WriteLine(result.ToString());
+       Assert.Equal(70600674, result);
     }
 
 }
